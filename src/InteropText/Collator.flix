@@ -85,7 +85,7 @@ pub mod InteropText.Collator {
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.equals(s1, s2) })
 
     ///
-    /// Compare strings `s1` and `s2` with the collator `x``.
+    /// Compare strings `s1` and `s2` with the collator `x`.
     ///
     pub def compare(x: Collator, s1: String, s2: String): Comparison =
         AdaptorExtras.extract(x, x1 -> 
