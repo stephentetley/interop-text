@@ -1,0 +1,13 @@
+[package]
+name        = "interop-text"
+description = "A Flix wrapper over parts of the Java.Text API"
+version     = "0.1.0"
+flix        = "0.75.3"
+license     = "Apache-2.0"
+authors     = ["Stephen Tetley <stephen.tetley@gmail.com>"]
+
+[dependencies]
+"github:stephentetley/charset-locale" = { version = "0.16.1", security = "unrestricted" }
+"github:stephentetley/adaptor-extras" = { version = "0.1.0", security = "unrestricted" }
+
+[mvn-dependencies]
