@@ -46,22 +46,61 @@ pub mod InteropText.Collator {
             Collator.Collator(x)
     }
 
+    pub enum CollatorDecomposition with Eq, Order, ToString {
+        case NO_DECOMPOSITION
+        case CANONICAL_DECOMPOSITION
+        case FULL_DECOMPOSITION
+    }
 
-    pub def no_decomposition(): Int32 = unsafe IO { JCollator.NO_DECOMPOSITION }
+    instance ToJava[CollatorDecomposition] {
+        type Out = Int32
+        pub def toJava(x: CollatorDecomposition): Int32 = match x {
+            case CollatorDecomposition.NO_DECOMPOSITION         => unsafe IO { JCollator.NO_DECOMPOSITION }
+            case CollatorDecomposition.CANONICAL_DECOMPOSITION  => unsafe IO { JCollator.CANONICAL_DECOMPOSITION }
+            case CollatorDecomposition.FULL_DECOMPOSITION       => unsafe IO { JCollator.FULL_DECOMPOSITION }
+        }
+    }
 
-    pub def canonical_decomposition(): Int32 = unsafe IO { JCollator.CANONICAL_DECOMPOSITION }
+    instance ToFlix[CollatorDecomposition] {
+        type In = Int32
+        pub def toFlix(x: Int32): CollatorDecomposition = unsafe IO {
+            if (x.equals(JCollator.NO_DECOMPOSITION))               CollatorDecomposition.NO_DECOMPOSITION
+            else if (x.equals(JCollator.CANONICAL_DECOMPOSITION))   CollatorDecomposition.CANONICAL_DECOMPOSITION
+            else if (x.equals(JCollator.FULL_DECOMPOSITION))        CollatorDecomposition.FULL_DECOMPOSITION
+            else bug!("toFlix[CollatorDecomposition]")
+        }
+    }
 
-    pub def full_decomposition(): Int32 = unsafe IO { JCollator.FULL_DECOMPOSITION }
 
+    pub enum CollatorStrength with Eq, Order, ToString {
+        case IDENTICAL
+        case PRIMARY
+        case SECONDARY
+        case TERTIARY
+    }
 
+    
+    instance ToJava[CollatorStrength] {
+        type Out = Int32
+        pub def toJava(x: CollatorStrength): Int32 = match x {
+            case CollatorStrength.IDENTICAL => unsafe IO { JCollator.IDENTICAL }
+            case CollatorStrength.PRIMARY   => unsafe IO { JCollator.PRIMARY }
+            case CollatorStrength.SECONDARY => unsafe IO { JCollator.SECONDARY }
+            case CollatorStrength.TERTIARY  => unsafe IO { JCollator.TERTIARY }
+        }
+    }
 
-    pub def identical(): Int32 = unsafe IO { JCollator.IDENTICAL }
+    instance ToFlix[CollatorStrength] {
+        type In = Int32
+        pub def toFlix(x: Int32): CollatorStrength = unsafe IO {
+            if (x.equals(JCollator.IDENTICAL))      CollatorStrength.IDENTICAL
+            else if (x.equals(JCollator.PRIMARY))   CollatorStrength.PRIMARY
+            else if (x.equals(JCollator.SECONDARY)) CollatorStrength.SECONDARY
+            else if (x.equals(JCollator.TERTIARY))  CollatorStrength.TERTIARY
+            else bug!("toFlix[CollatorStrength]")
+        }
+    }
 
-    pub def primary(): Int32 = unsafe IO { JCollator.PRIMARY }
-
-    pub def secondary(): Int32 = unsafe IO { JCollator.SECONDARY }
-
-    pub def tertiary(): Int32 = unsafe IO { JCollator.TERTIARY }
 
 
     ///
@@ -96,12 +135,12 @@ pub mod InteropText.Collator {
     pub def getCollationKey(src: String, x: Collator): CollationKey = 
         AdaptorExtras.op(x, x1 -> unsafe IO { x1.getCollationKey(src) })
 
-    pub def getDecomposition(x: Collator): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDecomposition() })
+    pub def getDecomposition(x: Collator): CollatorDecomposition =
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDecomposition() })
 
 
-    pub def getStrength(x: Collator): Int32 =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getStrength() })
+    pub def getStrength(x: Collator): CollatorStrength =
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getStrength() })
 
 
     // Builder?
