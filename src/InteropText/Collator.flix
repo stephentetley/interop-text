@@ -19,6 +19,7 @@ pub mod InteropText.Collator {
     use JavaInterop.AdaptorExtras
     use InteropLocale.Locale
 
+    use InteropText.CollationKey
 
     import java.text.{Collator => JCollator}
 
@@ -92,7 +93,8 @@ pub mod InteropText.Collator {
             unsafe IO { let cmp = x1.compare(s1, s2); Comparison.fromInt32(cmp) }
         )
 
-
+    pub def getCollationKey(src: String, x: Collator): CollationKey = 
+        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getCollationKey(src) })
 
     pub def getDecomposition(x: Collator): Int32 =
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getDecomposition() })
