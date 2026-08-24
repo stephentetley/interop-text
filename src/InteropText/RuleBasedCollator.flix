@@ -15,13 +15,17 @@
  */
 
 pub mod InteropText.RuleBasedCollator {
+    
 
+    use EffectExtras.Fail.Fail
     use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorExtras2
     use InteropLocale.Locale
 
     use InteropText.CollationKey
 
     import java.text.{RuleBasedCollator => JRuleBasedCollator}
+    import java.lang.{Exception => JException}
 
     pub enum RuleBasedCollator(JRuleBasedCollator)
     
@@ -42,6 +46,9 @@ pub mod InteropText.RuleBasedCollator {
 
 
 
+    pub def create(rules: String): RuleBasedCollator \ Fail = 
+        AdaptorExtras2.of(() -> unsafe IO { new JRuleBasedCollator(rules) })
+
 
     /// Put collator as first argument for partial application
 
@@ -59,9 +66,9 @@ pub mod InteropText.RuleBasedCollator {
             unsafe IO { let cmp = x1.compare(s1, s2); Comparison.fromInt32(cmp) }
         )
 
-
-    pub def getCollationKey(src: String, x: RuleBasedCollator): CollationKey = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getCollationKey(src) })
+    // Fails is null...
+    pub def getCollationKey(src: String, x: RuleBasedCollator): CollationKey \ Fail = 
+        AdaptorExtras2.op(x, x1 -> unsafe IO { x1.getCollationKey(src) })
 
     pub def getRules(x: RuleBasedCollator): String =
         AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getRules() })
