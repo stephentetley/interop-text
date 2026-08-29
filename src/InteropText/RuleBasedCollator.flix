@@ -18,8 +18,8 @@ pub mod InteropText.RuleBasedCollator {
     
 
     use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorExtras
-    use JavaInterop.AdaptorExtras2
+    use JavaInterop.AdaptorChecked
+    use JavaInterop.AdaptorUnchecked
     use InteropLocale.Locale
 
     use InteropText.CollationKey
@@ -47,7 +47,7 @@ pub mod InteropText.RuleBasedCollator {
 
 
     pub def create(rules: String): RuleBasedCollator \ Fail = 
-        AdaptorExtras2.of(() -> unsafe IO { new JRuleBasedCollator(rules) })
+        AdaptorChecked.of(() -> unsafe IO { new JRuleBasedCollator(rules) })
 
 
     /// Put collator as first argument for partial application
@@ -56,22 +56,22 @@ pub mod InteropText.RuleBasedCollator {
     /// Test equality of strings `s1` and `s2` with the collator `x``.
     ///
     pub def equals(x: RuleBasedCollator, s1: String, s2: String): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.equals(s1, s2) })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.equals(s1, s2) })
 
     ///
     /// Compare strings `s1` and `s2` with the collator `x`.
     ///
     pub def compare(x: RuleBasedCollator, s1: String, s2: String): Comparison =
-        AdaptorExtras.extract(x, x1 -> 
+        AdaptorUnchecked.extract(x, x1 -> 
             unsafe IO { let cmp = x1.compare(s1, s2); Comparison.fromInt32(cmp) }
         )
 
     // Fails is null...
     pub def getCollationKey(src: String, x: RuleBasedCollator): CollationKey \ Fail = 
-        AdaptorExtras2.op(x, x1 -> unsafe IO { x1.getCollationKey(src) })
+        AdaptorChecked.op(x, x1 -> unsafe IO { x1.getCollationKey(src) })
 
     pub def getRules(x: RuleBasedCollator): String =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getRules() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getRules() })
 
 
 }

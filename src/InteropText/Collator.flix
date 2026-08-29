@@ -16,7 +16,7 @@
 
 pub mod InteropText.Collator {
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
     use InteropLocale.Locale
 
     use InteropText.CollationKey
@@ -108,11 +108,11 @@ pub mod InteropText.Collator {
     /// Apply the setters in `fs` to further configure the Collator.
     ///
     pub def getInstance(): Collator \ IO =
-        AdaptorExtras.of(() -> JCollator.getInstance())
+        AdaptorUnchecked.of(() -> JCollator.getInstance())
     
 
     pub def getInstanceWithLocale(loc: Locale): Collator =
-        AdaptorExtras.op(loc, loc1 -> unsafe IO { JCollator.getInstance(loc1) })
+        AdaptorUnchecked.op(loc, loc1 -> unsafe IO { JCollator.getInstance(loc1) })
 
 
 
@@ -122,25 +122,25 @@ pub mod InteropText.Collator {
     /// Test equality of strings `s1` and `s2` with the collator `x``.
     ///
     pub def equals(x: Collator, s1: String, s2: String): Bool =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.equals(s1, s2) })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.equals(s1, s2) })
 
     ///
     /// Compare strings `s1` and `s2` with the collator `x`.
     ///
     pub def compare(x: Collator, s1: String, s2: String): Comparison =
-        AdaptorExtras.extract(x, x1 -> 
+        AdaptorUnchecked.extract(x, x1 -> 
             unsafe IO { let cmp = x1.compare(s1, s2); Comparison.fromInt32(cmp) }
         )
 
     pub def getCollationKey(src: String, x: Collator): CollationKey = 
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getCollationKey(src) })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getCollationKey(src) })
 
     pub def getDecomposition(x: Collator): CollatorDecomposition =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getDecomposition() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getDecomposition() })
 
 
     pub def getStrength(x: Collator): CollatorStrength =
-        AdaptorExtras.op(x, x1 -> unsafe IO { x1.getStrength() })
+        AdaptorUnchecked.op(x, x1 -> unsafe IO { x1.getStrength() })
 
 
     // Builder?

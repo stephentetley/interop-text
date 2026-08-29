@@ -16,7 +16,7 @@
 
 pub mod InteropText.CollationKey {
 
-    use JavaInterop.AdaptorExtras
+    use JavaInterop.AdaptorUnchecked
     use InteropLocale.Locale
 
     import java.text.{CollationKey => JCollationKey}
@@ -40,12 +40,12 @@ pub mod InteropText.CollationKey {
     /// Compare two CollationKeys.
     ///
     pub def compare(x: CollationKey, y: CollationKey): Comparison =
-        AdaptorExtras.extract2(x, y, (x1, y1) -> 
+        AdaptorUnchecked.extract2(x, y, (x1, y1) -> 
             unsafe IO { let cmp = x1.compareTo(y1); Comparison.fromInt32(cmp) }
         )
 
     pub def getSourceString(x: CollationKey): String =
-        AdaptorExtras.extract(x, x1 -> unsafe IO { x1.getSourceString() })
+        AdaptorUnchecked.extract(x, x1 -> unsafe IO { x1.getSourceString() })
 
 }
 
