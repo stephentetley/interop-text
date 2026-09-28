@@ -17,10 +17,11 @@
 pub mod InteropText.RuleBasedCollator {
     
 
-    use EffectExtras.Fail.Fail
-    use JavaInterop.AdaptorChecked
-    use JavaInterop.AdaptorUnchecked
-    use InteropLocale.Locale
+    use ee::EffectExtras.Fail.Fail
+    use ae::JavaInterop.InteropErr
+    use ae::JavaInterop.AdaptorChecked
+    use ae::JavaInterop.AdaptorUnchecked
+    use cl::InteropLocale.Locale
 
     use InteropText.CollationKey
 
@@ -46,7 +47,7 @@ pub mod InteropText.RuleBasedCollator {
 
 
 
-    pub def create(rules: String): RuleBasedCollator \ Fail = 
+    pub def newRuleBasedCollator(rules: String): RuleBasedCollator \ Fail[InteropErr] = 
         AdaptorChecked.of(() -> unsafe IO { new JRuleBasedCollator(rules) })
 
 
@@ -67,7 +68,7 @@ pub mod InteropText.RuleBasedCollator {
         )
 
     // Fails is null...
-    pub def getCollationKey(src: String, x: RuleBasedCollator): CollationKey \ Fail = 
+    pub def getCollationKey(src: String, x: RuleBasedCollator): CollationKey \ Fail[InteropErr] = 
         AdaptorChecked.op(x, x1 -> unsafe IO { x1.getCollationKey(src) })
 
     pub def getRules(x: RuleBasedCollator): String =

@@ -16,8 +16,8 @@
 
 pub mod InteropText.Collator {
 
-    use JavaInterop.AdaptorUnchecked
-    use InteropLocale.Locale
+    use ae::JavaInterop.AdaptorUnchecked
+    use cl::InteropLocale.Locale
 
     use InteropText.CollationKey
 
@@ -63,12 +63,11 @@ pub mod InteropText.Collator {
 
     instance ToFlix[CollatorDecomposition] {
         type In = Int32
-        pub def toFlix(x: Int32): CollatorDecomposition = unsafe IO {
-            if (x.equals(JCollator.NO_DECOMPOSITION))               CollatorDecomposition.NO_DECOMPOSITION
-            else if (x.equals(JCollator.CANONICAL_DECOMPOSITION))   CollatorDecomposition.CANONICAL_DECOMPOSITION
-            else if (x.equals(JCollator.FULL_DECOMPOSITION))        CollatorDecomposition.FULL_DECOMPOSITION
+        pub def toFlix(x: Int32): CollatorDecomposition = 
+            if (x == JCollator.NO_DECOMPOSITION)               CollatorDecomposition.NO_DECOMPOSITION
+            else if (x == JCollator.CANONICAL_DECOMPOSITION)   CollatorDecomposition.CANONICAL_DECOMPOSITION
+            else if (x == JCollator.FULL_DECOMPOSITION)        CollatorDecomposition.FULL_DECOMPOSITION
             else bug!("toFlix[CollatorDecomposition]")
-        }
     }
 
 
@@ -92,13 +91,12 @@ pub mod InteropText.Collator {
 
     instance ToFlix[CollatorStrength] {
         type In = Int32
-        pub def toFlix(x: Int32): CollatorStrength = unsafe IO {
-            if (x.equals(JCollator.IDENTICAL))      CollatorStrength.IDENTICAL
-            else if (x.equals(JCollator.PRIMARY))   CollatorStrength.PRIMARY
-            else if (x.equals(JCollator.SECONDARY)) CollatorStrength.SECONDARY
-            else if (x.equals(JCollator.TERTIARY))  CollatorStrength.TERTIARY
+        pub def toFlix(x: Int32): CollatorStrength = 
+            if (x == JCollator.IDENTICAL)      CollatorStrength.IDENTICAL
+            else if (x == JCollator.PRIMARY)   CollatorStrength.PRIMARY
+            else if (x == JCollator.SECONDARY) CollatorStrength.SECONDARY
+            else if (x == JCollator.TERTIARY)  CollatorStrength.TERTIARY
             else bug!("toFlix[CollatorStrength]")
-        }
     }
 
 

@@ -16,8 +16,8 @@
 
 pub mod InteropText.CollationKey {
 
-    use JavaInterop.AdaptorUnchecked
-    use InteropLocale.Locale
+    use ae::JavaInterop.AdaptorUnchecked
+    use cl::InteropLocale.Locale
 
     import java.text.{CollationKey => JCollationKey}
 
