@@ -16,7 +16,7 @@
 
 pub mod InteropText.Collator {
 
-    use ae::JavaInterop.AdaptorUnchecked
+    use ae::AdaptorExtras.AdaptorUnchecked
     use cl::InteropLocale.Locale
 
     use InteropText.CollationKey

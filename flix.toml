@@ -1,14 +1,11 @@
 [package]
-name        = "interop-text"
-description = "A Flix wrapper over parts of the Java.Text API"
 version     = "0.1.0"
-flix        = "0.75.3"
-license     = "Apache-2.0"
-authors     = ["Stephen Tetley <stephen.tetley@gmail.com>"]
+flix        = "0.76.2"
+repository  = "github:stephentetley/interop-text"
 
 [dependencies]
-"github:stephentetley/effect-extras" = { version = "0.5.0", security = "unrestricted", mount = "ee" }
-"github:stephentetley/adaptor-extras" = { version = "0.4.0", security = "unrestricted", mount = "ae" }
-"github:stephentetley/charset-locale" = { version = "0.17.0", security = "unrestricted", mount = "cl" }
+"github:stephentetley/effect-extras" = { version = "0.7.0", security = "unrestricted", mount = "ee" }
+"github:stephentetley/adaptor-extras" = { version = "0.6.0", security = "unrestricted", mount = "ae" }
+"github:stephentetley/charset-locale" = { version = "0.18.0", security = "unrestricted", mount = "cl" }
 
 [mvn-dependencies]
